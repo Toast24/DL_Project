@@ -50,6 +50,12 @@ def normalize_map(anomaly_map: np.ndarray):
     return np.clip((anomaly_map - lo) / (hi - lo), 0.0, 1.0).astype(np.float32)
 
 
+def sigmoid_prob(logit: float):
+    # Clamp logits to keep exp stable while preserving probability shape.
+    z = float(np.clip(logit, -30.0, 30.0))
+    return float(1.0 / (1.0 + np.exp(-z)))
+
+
 def save_segmentation_artifacts(image_np: np.ndarray, map_norm: np.ndarray, mask_bin: np.ndarray, out_base: Path):
     heatmap_uint8 = (map_norm * 255.0).astype(np.uint8)
     mask_uint8 = (mask_bin.astype(np.uint8) * 255)
@@ -87,9 +93,11 @@ def main():
                         help="0 means all images")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--image_threshold", type=float, default=0.50,
-                        help="Image-level anomaly threshold used to select defect wording")
+                        help="Threshold on sigmoid(anomaly_score) used for image-level anomaly decision")
     parser.add_argument("--pixel_threshold", type=float, default=0.60,
-                        help="Pixel threshold over normalized anomaly map for segmentation mask")
+                        help="Pixel threshold over post-processed anomaly probability map for segmentation mask")
+    parser.add_argument("--min_defect_area_ratio", type=float, default=0.01,
+                        help="Minimum fraction of pixels over pixel_threshold to mark image as anomalous")
     parser.add_argument("--caption_finetune", action="store_true",
                         help="Enable caption domain fine-tuning before generation")
     parser.add_argument("--no_caption_text_int8", action="store_true",
@@ -136,8 +144,12 @@ def main():
 
     image_np_list = []
     image_pil_list = []
+    map_prob_list = []
     map_norm_list = []
     score_list = []
+    score_prob_list = []
+    pixel_ratio_list = []
+    pred_label_list = []
     defect_hint_list = []
     meta = []
 
@@ -160,17 +172,28 @@ def main():
             median_ksize=int(config.get("eval", {}).get("median_ksize", 0)),
         )[0]
 
-        map_norm = normalize_map(proc_map)
+        map_prob = np.clip(proc_map, 0.0, 1.0).astype(np.float32)
+        map_norm = normalize_map(map_prob)
         score = float(torch.as_tensor(outputs["anomaly_score"]).detach().flatten()[0].item())
+        score_prob = sigmoid_prob(score)
+        pixel_ratio = float((map_prob >= float(args.pixel_threshold)).mean())
+        pred_label = int(
+            (score_prob >= float(args.image_threshold))
+            or (pixel_ratio >= float(args.min_defect_area_ratio))
+        )
 
         img_np = np.array(pil.resize((int(config["data"]["img_size"]), int(config["data"]["img_size"]))))
         image_np_list.append(img_np)
         image_pil_list.append(Image.fromarray(img_np))
+        map_prob_list.append(map_prob)
         map_norm_list.append(map_norm)
         score_list.append(score)
+        score_prob_list.append(score_prob)
+        pixel_ratio_list.append(pixel_ratio)
+        pred_label_list.append(pred_label)
 
         defect_hint = infer_defect_hint(p, input_folder)
-        if score < float(args.image_threshold):
+        if pred_label == 0:
             defect_hint = "good"
         defect_hint_list.append(defect_hint)
 
@@ -179,7 +202,7 @@ def main():
                 "image_path": str(p),
                 "category": args.category,
                 "defect_type": defect_hint,
-                "label": int(score >= float(args.image_threshold)),
+                "label": pred_label,
             }
         )
 
@@ -209,14 +232,19 @@ def main():
         "caption_finetune": bool(caption_cfg.get("domain_finetune", {}).get("enabled", False)),
         "image_threshold": float(args.image_threshold),
         "pixel_threshold": float(args.pixel_threshold),
+        "min_defect_area_ratio": float(args.min_defect_area_ratio),
         "num_images": len(image_paths),
         "samples": [],
     }
 
     for idx, p in enumerate(image_paths):
+        map_prob = map_prob_list[idx]
         map_norm = map_norm_list[idx]
-        mask_bin = map_norm >= float(args.pixel_threshold)
+        mask_bin = map_prob >= float(args.pixel_threshold)
         score = score_list[idx]
+        score_prob = score_prob_list[idx]
+        pixel_ratio = pixel_ratio_list[idx]
+        pred_label = pred_label_list[idx]
 
         stem = p.stem
         out_base = vis_dir / f"{idx:03d}_{stem}"
@@ -228,7 +256,7 @@ def main():
             map_norm,
             mask=None,
             save_path=str(viz_path),
-            title=f"Score={score:.3f} | Caption={captions[idx]}",
+            title=f"Score(logit)={score:.3f} | Prob={score_prob:.3f} | Mask>thr={pixel_ratio:.3f} | Caption={captions[idx]}",
         )
 
         caption_path = vis_dir / f"{idx:03d}_{stem}.txt"
@@ -238,8 +266,10 @@ def main():
         summary["samples"].append(
             {
                 "image_path": str(p),
-                "score": float(score),
-                "predicted_label": int(score >= float(args.image_threshold)),
+                "score_logit": float(score),
+                "score_probability": float(score_prob),
+                "pixel_positive_ratio": float(pixel_ratio),
+                "predicted_label": int(pred_label),
                 "defect_hint": defect_hint_list[idx],
                 "caption": captions[idx],
                 "artifacts": {
