@@ -30,7 +30,7 @@ Notes:
 ## 2) Clone and Environment Setup (PowerShell)
 
 ```powershell
-git clone <your_repo_url>
+git clone [<your_repo_url>](https://github.com/Toast24/DL_Project/)
 cd ssvp
 
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
