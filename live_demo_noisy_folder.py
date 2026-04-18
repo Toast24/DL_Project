@@ -1,0 +1,265 @@
+"""
+Run a live segmentation + captioning demo on noisy images from a user-specified folder.
+
+Default behavior uses run21 best model and enables caption text INT8 compression.
+
+Example:
+  python live_demo_noisy_folder.py \
+      --input_folder data/cable/test/combined \
+      --output_dir outputs/live_demo_combined
+"""
+
+import argparse
+import json
+from pathlib import Path
+
+import numpy as np
+import torch
+from PIL import Image
+
+from data.transforms import DualResizeTransform
+from models.ssvp import SSVP
+from run_full_pipeline import generate_captions
+from utils import load_config, postprocess_anomaly_map, set_seed, visualize_results
+
+
+VALID_EXTS = {".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff", ".webp"}
+
+
+def collect_image_paths(input_folder: Path, recursive: bool):
+    if recursive:
+        files = [p for p in input_folder.rglob("*") if p.is_file() and p.suffix.lower() in VALID_EXTS]
+    else:
+        files = [p for p in input_folder.glob("*") if p.is_file() and p.suffix.lower() in VALID_EXTS]
+    return sorted(files)
+
+
+def infer_defect_hint(image_path: Path, input_folder: Path):
+    parent = image_path.parent.name.strip().lower().replace("_", " ")
+    root = input_folder.name.strip().lower().replace("_", " ")
+    if not parent or parent in {root, "images", "image", "img", "noisy", "test", "dataset"}:
+        return "anomaly"
+    return parent
+
+
+def normalize_map(anomaly_map: np.ndarray):
+    lo = float(np.percentile(anomaly_map, 1.0))
+    hi = float(np.percentile(anomaly_map, 99.0))
+    if hi - lo < 1e-8:
+        return np.zeros_like(anomaly_map, dtype=np.float32)
+    return np.clip((anomaly_map - lo) / (hi - lo), 0.0, 1.0).astype(np.float32)
+
+
+def save_segmentation_artifacts(image_np: np.ndarray, map_norm: np.ndarray, mask_bin: np.ndarray, out_base: Path):
+    heatmap_uint8 = (map_norm * 255.0).astype(np.uint8)
+    mask_uint8 = (mask_bin.astype(np.uint8) * 255)
+
+    Image.fromarray(heatmap_uint8).save(str(out_base.with_suffix(".heatmap.png")))
+    Image.fromarray(mask_uint8).save(str(out_base.with_suffix(".mask.png")))
+
+    overlay = image_np.copy()
+    red = np.array([255, 0, 0], dtype=np.uint8)
+    blend_idx = mask_bin.astype(bool)
+    overlay[blend_idx] = (0.65 * overlay[blend_idx] + 0.35 * red).astype(np.uint8)
+    Image.fromarray(overlay).save(str(out_base.with_suffix(".overlay.png")))
+
+
+def load_model(config, checkpoint_path: Path, device: torch.device):
+    model = SSVP(config).to(device)
+    ckpt = torch.load(str(checkpoint_path), map_location=device, weights_only=False)
+    model.load_state_dict(ckpt["model_state"], strict=False)
+    model.eval()
+    return model
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Live demo for noisy-folder segmentation + captioning")
+    parser.add_argument("--config", type=str, default="configs/default.yaml")
+    parser.add_argument("--checkpoint", type=str, default="outputs/run21_resplit_15es/best_model.pth")
+    parser.add_argument("--input_folder", type=str, required=True,
+                        help="Folder containing noisy input images")
+    parser.add_argument("--output_dir", type=str, default="outputs/live_demo")
+    parser.add_argument("--category", type=str, default="cable")
+    parser.add_argument("--data_root", type=str, default=None,
+                        help="Optional dataset root/category path for caption fine-tune sampling")
+    parser.add_argument("--recursive", action="store_true")
+    parser.add_argument("--max_images", type=int, default=0,
+                        help="0 means all images")
+    parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--image_threshold", type=float, default=0.50,
+                        help="Image-level anomaly threshold used to select defect wording")
+    parser.add_argument("--pixel_threshold", type=float, default=0.60,
+                        help="Pixel threshold over normalized anomaly map for segmentation mask")
+    parser.add_argument("--caption_finetune", action="store_true",
+                        help="Enable caption domain fine-tuning before generation")
+    parser.add_argument("--no_caption_text_int8", action="store_true",
+                        help="Disable INT8 text-transformer compression for captions")
+    parser.add_argument("--caption_prompt_prefix", type=str, default="industrial inspection photo")
+    args = parser.parse_args()
+
+    input_folder = Path(args.input_folder)
+    if not input_folder.exists() or not input_folder.is_dir():
+        raise FileNotFoundError(f"Input folder not found: {input_folder}")
+
+    checkpoint_path = Path(args.checkpoint)
+    if not checkpoint_path.exists():
+        raise FileNotFoundError(f"Checkpoint not found: {checkpoint_path}")
+
+    output_dir = Path(args.output_dir)
+    vis_dir = output_dir / "visualizations_with_captions"
+    vis_dir.mkdir(parents=True, exist_ok=True)
+
+    config = load_config(args.config)
+    if args.data_root:
+        config.setdefault("data", {})["data_root"] = args.data_root
+
+    caption_cfg = config.setdefault("captioning", {})
+    caption_cfg["use_domain_prompt"] = True
+    caption_cfg["prompt"] = str(args.caption_prompt_prefix)
+    caption_cfg["quantize_text_transformer_int8"] = not bool(args.no_caption_text_int8)
+    caption_cfg.setdefault("domain_finetune", {})["enabled"] = bool(args.caption_finetune)
+
+    set_seed(args.seed)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    transform = DualResizeTransform(
+        img_size=int(config["data"]["img_size"]),
+        mask_size=int(config["data"]["mask_size"]),
+    )
+
+    image_paths = collect_image_paths(input_folder, recursive=bool(args.recursive))
+    if args.max_images and args.max_images > 0:
+        image_paths = image_paths[: int(args.max_images)]
+    if not image_paths:
+        raise RuntimeError(f"No images found in: {input_folder}")
+
+    model = load_model(config, checkpoint_path, device)
+
+    image_np_list = []
+    image_pil_list = []
+    map_norm_list = []
+    score_list = []
+    defect_hint_list = []
+    meta = []
+
+    sigma = float(config.get("eval", {}).get("gaussian_sigma", 1.5))
+    for p in image_paths:
+        pil = Image.open(p).convert("RGB")
+        img_tensor, _, _ = transform(pil, mask=None)
+
+        with torch.no_grad():
+            x = img_tensor.unsqueeze(0).to(device)
+            class_emb = model.get_class_token_embedding(args.category, device=device)
+            outputs = model(x, class_token_embedding=class_emb)
+
+        anomaly_map = torch.sigmoid(outputs["anomaly_map"])
+        proc_map = postprocess_anomaly_map(
+            anomaly_map,
+            target_size=(int(config["data"]["img_size"]), int(config["data"]["img_size"])),
+            sigma=sigma,
+            clip_percentiles=config.get("eval", {}).get("clip_percentiles", [1.0, 99.0]),
+            median_ksize=int(config.get("eval", {}).get("median_ksize", 0)),
+        )[0]
+
+        map_norm = normalize_map(proc_map)
+        score = float(torch.as_tensor(outputs["anomaly_score"]).detach().flatten()[0].item())
+
+        img_np = np.array(pil.resize((int(config["data"]["img_size"]), int(config["data"]["img_size"]))))
+        image_np_list.append(img_np)
+        image_pil_list.append(Image.fromarray(img_np))
+        map_norm_list.append(map_norm)
+        score_list.append(score)
+
+        defect_hint = infer_defect_hint(p, input_folder)
+        if score < float(args.image_threshold):
+            defect_hint = "good"
+        defect_hint_list.append(defect_hint)
+
+        meta.append(
+            {
+                "image_path": str(p),
+                "category": args.category,
+                "defect_type": defect_hint,
+                "label": int(score >= float(args.image_threshold)),
+            }
+        )
+
+    try:
+        captions = generate_captions(
+            image_pil_list,
+            meta,
+            device,
+            config,
+            output_dir=str(output_dir),
+            seed=int(args.seed),
+            categories=[args.category],
+        )
+    except Exception:
+        captions = [
+            f"industrial inspection image of {args.category} with {m['defect_type']} condition"
+            for m in meta
+        ]
+
+    summary = {
+        "config": args.config,
+        "checkpoint": str(checkpoint_path),
+        "input_folder": str(input_folder),
+        "output_dir": str(output_dir),
+        "category": args.category,
+        "caption_text_int8": bool(caption_cfg.get("quantize_text_transformer_int8", False)),
+        "caption_finetune": bool(caption_cfg.get("domain_finetune", {}).get("enabled", False)),
+        "image_threshold": float(args.image_threshold),
+        "pixel_threshold": float(args.pixel_threshold),
+        "num_images": len(image_paths),
+        "samples": [],
+    }
+
+    for idx, p in enumerate(image_paths):
+        map_norm = map_norm_list[idx]
+        mask_bin = map_norm >= float(args.pixel_threshold)
+        score = score_list[idx]
+
+        stem = p.stem
+        out_base = vis_dir / f"{idx:03d}_{stem}"
+        save_segmentation_artifacts(image_np_list[idx], map_norm, mask_bin, out_base)
+
+        viz_path = vis_dir / f"{idx:03d}_{stem}.viz.png"
+        visualize_results(
+            image_np_list[idx],
+            map_norm,
+            mask=None,
+            save_path=str(viz_path),
+            title=f"Score={score:.3f} | Caption={captions[idx]}",
+        )
+
+        caption_path = vis_dir / f"{idx:03d}_{stem}.txt"
+        with open(caption_path, "w", encoding="utf-8") as f:
+            f.write(captions[idx])
+
+        summary["samples"].append(
+            {
+                "image_path": str(p),
+                "score": float(score),
+                "predicted_label": int(score >= float(args.image_threshold)),
+                "defect_hint": defect_hint_list[idx],
+                "caption": captions[idx],
+                "artifacts": {
+                    "viz": str(viz_path),
+                    "heatmap": str(out_base.with_suffix(".heatmap.png")),
+                    "mask": str(out_base.with_suffix(".mask.png")),
+                    "overlay": str(out_base.with_suffix(".overlay.png")),
+                    "caption": str(caption_path),
+                },
+            }
+        )
+
+    summary_path = output_dir / "demo_summary.json"
+    with open(summary_path, "w", encoding="utf-8") as f:
+        json.dump(summary, f, indent=2)
+
+    print(f"Processed {len(image_paths)} images.")
+    print(f"Saved demo artifacts to: {vis_dir}")
+    print(f"Summary: {summary_path}")
+
+
+if __name__ == "__main__":
+    main()
