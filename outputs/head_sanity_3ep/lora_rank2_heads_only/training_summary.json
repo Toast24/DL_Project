@@ -1,0 +1,9 @@
+{
+  "best_val_loss": 1.6800508201122284,
+  "epochs_completed": 3,
+  "early_stopping_enabled": true,
+  "early_stopping_patience": 5,
+  "monitor": "val_loss",
+  "metrics_file": "outputs\\head_sanity_3ep\\lora_rank2_heads_only\\training_metrics.json",
+  "val_visualizations_dir": "outputs\\head_sanity_3ep\\lora_rank2_heads_only\\val_visualizations"
+}

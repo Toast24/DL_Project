@@ -1,0 +1,7 @@
+{
+  "image_threshold": 0.01527421548962593,
+  "pixel_threshold": 0.8480199575424194,
+  "val_image_f1": 0.5999999950000001,
+  "val_pixel_f1": 0.12020556869742967,
+  "calibration_mode": "clean_only"
+}

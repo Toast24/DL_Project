@@ -1,0 +1,24 @@
+{
+  "overall": {
+    "image_level": {
+      "auroc": 42.757936507936506,
+      "f1_max": 39.99999968,
+      "ap": 22.86829806381631
+    },
+    "pixel_level": {
+      "auroc": 71.66694852981577,
+      "pro": 39.64417580447453,
+      "ap": 2.120894938768592
+    },
+    "n_samples": 74,
+    "thresholded": {
+      "image_threshold": 0.06629828363656998,
+      "pixel_threshold": 0.9249926209449768,
+      "image_accuracy": 24.324324324324326,
+      "image_precision": 24.324324324324326,
+      "image_recall": 100.0,
+      "image_f1": 39.130434782608695,
+      "pixel_accuracy": 97.04304134936504
+    }
+  }
+}

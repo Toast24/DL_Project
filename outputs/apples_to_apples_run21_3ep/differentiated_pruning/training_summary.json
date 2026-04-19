@@ -1,0 +1,9 @@
+{
+  "best_val_loss": 2.0506011724472044,
+  "epochs_completed": 3,
+  "early_stopping_enabled": true,
+  "early_stopping_patience": 5,
+  "monitor": "val_loss",
+  "metrics_file": "outputs/apples_to_apples_run21_3ep/differentiated_pruning\\training_metrics.json",
+  "val_visualizations_dir": "outputs/apples_to_apples_run21_3ep/differentiated_pruning\\val_visualizations"
+}

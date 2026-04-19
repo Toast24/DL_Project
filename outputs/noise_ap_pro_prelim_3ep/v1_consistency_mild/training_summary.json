@@ -1,0 +1,9 @@
+{
+  "best_val_loss": 2.2562215685844422,
+  "epochs_completed": 3,
+  "early_stopping_enabled": true,
+  "early_stopping_patience": 5,
+  "monitor": "val_loss",
+  "metrics_file": "outputs/noise_ap_pro_prelim_3ep/v1_consistency_mild\\training_metrics.json",
+  "val_visualizations_dir": "outputs/noise_ap_pro_prelim_3ep/v1_consistency_mild\\val_visualizations"
+}

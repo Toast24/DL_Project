@@ -1,0 +1,57 @@
+{
+  "config": "configs/default.yaml",
+  "checkpoint": "outputs/run21_resplit_15es/best_model.pth",
+  "data_root": "data/cable_resplit/cable",
+  "num_vis_samples": 3,
+  "variants": {
+    "baseline": {
+      "variant": "baseline",
+      "flags": [],
+      "run_dir": "outputs\\llm_prompt_tests\\baseline",
+      "elapsed_sec": 26.695,
+      "visualizations_png": 3,
+      "captions_txt": 3,
+      "caption_finetune_summary": {
+        "enabled": false,
+        "skipped": true,
+        "reason": "disabled"
+      }
+    },
+    "llm_compression": {
+      "variant": "llm_compression",
+      "flags": [
+        "--caption_text_int8"
+      ],
+      "run_dir": "outputs\\llm_prompt_tests\\llm_compression",
+      "elapsed_sec": 29.595,
+      "visualizations_png": 3,
+      "captions_txt": 3,
+      "caption_finetune_summary": {
+        "enabled": false,
+        "skipped": true,
+        "reason": "disabled"
+      }
+    },
+    "prompt_improvement": {
+      "variant": "prompt_improvement",
+      "flags": [
+        "--caption_finetune"
+      ],
+      "run_dir": "outputs\\llm_prompt_tests\\prompt_improvement",
+      "elapsed_sec": 268.434,
+      "visualizations_png": 3,
+      "captions_txt": 3,
+      "caption_finetune_summary": {
+        "enabled": true,
+        "skipped": false,
+        "records": 96,
+        "epochs": 1,
+        "batch_size": 4,
+        "lr": 2e-05,
+        "epoch_losses": [
+          0.9671755272041386
+        ]
+      }
+    }
+  }
+}

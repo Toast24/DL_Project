@@ -1,0 +1,40 @@
+{
+  "per_category": {
+    "cable": {
+      "image_level": {
+        "auroc": 78.67063492063492,
+        "f1_max": 61.53846104142012,
+        "ap": 57.061032572215176
+      },
+      "pixel_level": {
+        "auroc": 78.56913563473685,
+        "pro": 41.14109499684921,
+        "ap": 4.037016977918952
+      },
+      "n_samples": 74,
+      "n_anomalous": 18
+    }
+  },
+  "overall": {
+    "image_level": {
+      "auroc": 78.67063492063492,
+      "f1_max": 61.53846104142012,
+      "ap": 57.061032572215176
+    },
+    "pixel_level": {
+      "auroc": 78.56913563473685,
+      "pro": 41.14109499684921,
+      "ap": 4.037016977918952
+    },
+    "n_samples": 74,
+    "thresholded": {
+      "image_threshold": 0.06629828363656998,
+      "pixel_threshold": 0.9249926209449768,
+      "image_accuracy": 66.21621621621621,
+      "image_precision": 40.0,
+      "image_recall": 77.77777777777779,
+      "image_f1": 52.83018867924528,
+      "pixel_accuracy": 97.23165962730818
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "best_val_loss": 2.65594722032547,
+  "epochs_completed": 3,
+  "early_stopping_enabled": true,
+  "early_stopping_patience": 5,
+  "monitor": "val_loss",
+  "metrics_file": "outputs/run22_promptdice_3ep\\training_metrics.json",
+  "val_visualizations_dir": "outputs/run22_promptdice_3ep\\val_visualizations"
+}

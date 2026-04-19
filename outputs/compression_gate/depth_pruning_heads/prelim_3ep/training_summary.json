@@ -1,0 +1,9 @@
+{
+  "best_val_loss": 2.2388169407844543,
+  "epochs_completed": 3,
+  "early_stopping_enabled": true,
+  "early_stopping_patience": 5,
+  "monitor": "val_loss",
+  "metrics_file": "outputs\\compression_gate\\depth_pruning_heads\\prelim_3ep\\training_metrics.json",
+  "val_visualizations_dir": "outputs\\compression_gate\\depth_pruning_heads\\prelim_3ep\\val_visualizations"
+}

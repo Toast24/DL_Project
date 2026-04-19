@@ -1,0 +1,9 @@
+{
+  "best_val_loss": 1.5192474544048309,
+  "epochs_completed": 13,
+  "early_stopping_enabled": true,
+  "early_stopping_patience": 5,
+  "monitor": "val_loss",
+  "metrics_file": "outputs/run30_entropy_pro_noisycal_15es\\training_metrics.json",
+  "val_visualizations_dir": "outputs/run30_entropy_pro_noisycal_15es\\val_visualizations"
+}

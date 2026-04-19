@@ -1,0 +1,95 @@
+{
+  "config": "configs/default.yaml",
+  "checkpoint": "outputs\\run21_resplit_15es\\best_model.pth",
+  "input_folder": "outputs\\demo_random_input",
+  "output_dir": "outputs\\live_demo_random_test_patched",
+  "category": "cable",
+  "caption_text_int8": true,
+  "caption_finetune": false,
+  "image_threshold": 0.5,
+  "pixel_threshold": 0.6,
+  "min_defect_area_ratio": 0.01,
+  "num_images": 5,
+  "samples": [
+    {
+      "image_path": "outputs\\demo_random_input\\img_00.png",
+      "score_logit": -0.48148801922798157,
+      "score_probability": 0.3819008127772831,
+      "pixel_positive_ratio": 0.007233791982826732,
+      "predicted_label": 0,
+      "defect_hint": "good",
+      "caption": "industrial inspection photo : close - up industrial inspection image of cable with no visible defect",
+      "artifacts": {
+        "viz": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\000_img_00.viz.png",
+        "heatmap": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\000_img_00.heatmap.png",
+        "mask": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\000_img_00.mask.png",
+        "overlay": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\000_img_00.overlay.png",
+        "caption": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\000_img_00.txt"
+      }
+    },
+    {
+      "image_path": "outputs\\demo_random_input\\img_01.png",
+      "score_logit": -0.47462034225463867,
+      "score_probability": 0.3835232551917722,
+      "pixel_positive_ratio": 0.00445729789359133,
+      "predicted_label": 0,
+      "defect_hint": "good",
+      "caption": "industrial inspection photo : close - up industrial inspection image of cable with no visible defect",
+      "artifacts": {
+        "viz": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\001_img_01.viz.png",
+        "heatmap": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\001_img_01.heatmap.png",
+        "mask": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\001_img_01.mask.png",
+        "overlay": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\001_img_01.overlay.png",
+        "caption": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\001_img_01.txt"
+      }
+    },
+    {
+      "image_path": "outputs\\demo_random_input\\img_02.png",
+      "score_logit": -0.3486034870147705,
+      "score_probability": 0.4137211127576755,
+      "pixel_positive_ratio": 0.04675690583026491,
+      "predicted_label": 1,
+      "defect_hint": "anomaly",
+      "caption": "industrial inspection photo : close - up industrial inspection image of cable showing anomaly defect",
+      "artifacts": {
+        "viz": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\002_img_02.viz.png",
+        "heatmap": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\002_img_02.heatmap.png",
+        "mask": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\002_img_02.mask.png",
+        "overlay": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\002_img_02.overlay.png",
+        "caption": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\002_img_02.txt"
+      }
+    },
+    {
+      "image_path": "outputs\\demo_random_input\\img_03.png",
+      "score_logit": -0.7715767025947571,
+      "score_probability": 0.31613813256384854,
+      "pixel_positive_ratio": 0.0,
+      "predicted_label": 0,
+      "defect_hint": "good",
+      "caption": "industrial inspection photo : close - up industrial inspection image of cable with no visible defect",
+      "artifacts": {
+        "viz": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\003_img_03.viz.png",
+        "heatmap": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\003_img_03.heatmap.png",
+        "mask": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\003_img_03.mask.png",
+        "overlay": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\003_img_03.overlay.png",
+        "caption": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\003_img_03.txt"
+      }
+    },
+    {
+      "image_path": "outputs\\demo_random_input\\img_04.png",
+      "score_logit": -0.8002175688743591,
+      "score_probability": 0.30997898070422514,
+      "pixel_positive_ratio": 0.0,
+      "predicted_label": 0,
+      "defect_hint": "good",
+      "caption": "industrial inspection photo : close - up industrial inspection image of cable with no visible defect",
+      "artifacts": {
+        "viz": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\004_img_04.viz.png",
+        "heatmap": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\004_img_04.heatmap.png",
+        "mask": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\004_img_04.mask.png",
+        "overlay": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\004_img_04.overlay.png",
+        "caption": "outputs\\live_demo_random_test_patched\\visualizations_with_captions\\004_img_04.txt"
+      }
+    }
+  ]
+}

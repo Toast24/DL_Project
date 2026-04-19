@@ -1,0 +1,9 @@
+{
+  "best_val_loss": 0.898550134897232,
+  "epochs_completed": 9,
+  "early_stopping_enabled": true,
+  "early_stopping_patience": 5,
+  "monitor": "val_loss",
+  "metrics_file": "outputs/run21_resplit_15es\\training_metrics.json",
+  "val_visualizations_dir": "outputs/run21_resplit_15es\\val_visualizations"
+}

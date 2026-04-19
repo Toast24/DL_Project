@@ -1,0 +1,79 @@
+{
+  "run21_metrics_file": "outputs/run21_resplit_15es/training_metrics.json",
+  "dae_metrics_file": "outputs/noisy_dae_3ep/dae_noisy_train_rerun/training_metrics.json",
+  "run21_reference_epoch": 3,
+  "dae_best_epoch_by": "val_loss",
+  "dae_best_epoch": 1,
+  "comparison": {
+    "train_loss": {
+      "run21_epoch3": 1.3781454508121198,
+      "dae_best_epoch": 4.499567083212045,
+      "delta_dae_minus_run21": 3.121421632399925
+    },
+    "train_seg": {
+      "run21_epoch3": 0.0177304776555572,
+      "dae_best_epoch": 0.31911321649184593,
+      "delta_dae_minus_run21": 0.30138273883628874
+    },
+    "train_class": {
+      "run21_epoch3": 0.5692218743837797,
+      "dae_best_epoch": 0.7054813572993646,
+      "delta_dae_minus_run21": 0.13625948291558487
+    },
+    "train_vae": {
+      "run21_epoch3": 0.7911931033317859,
+      "dae_best_epoch": 3.400043283059047,
+      "delta_dae_minus_run21": 2.608850179727261
+    },
+    "train_reg": {
+      "run21_epoch3": 0.0,
+      "dae_best_epoch": 0.0,
+      "delta_dae_minus_run21": 0.0
+    },
+    "val_loss": {
+      "run21_epoch3": 1.0225289463996887,
+      "dae_best_epoch": 2.9259552717208863,
+      "delta_dae_minus_run21": 1.9034263253211976
+    },
+    "val_seg": {
+      "run21_epoch3": 0.015383721620310098,
+      "dae_best_epoch": 0.31395802050828936,
+      "delta_dae_minus_run21": 0.29857429888797926
+    },
+    "val_class": {
+      "run21_epoch3": 0.5876377835869789,
+      "dae_best_epoch": 0.6988926142454147,
+      "delta_dae_minus_run21": 0.11125483065843578
+    },
+    "val_vae": {
+      "run21_epoch3": 0.4195074483752251,
+      "dae_best_epoch": 1.913104659318924,
+      "delta_dae_minus_run21": 1.493597210943699
+    },
+    "val_reg": {
+      "run21_epoch3": 0.0,
+      "dae_best_epoch": 0.0,
+      "delta_dae_minus_run21": 0.0
+    },
+    "lr": {
+      "run21_epoch3": 0.00036923076923076927,
+      "dae_best_epoch": 0.0001230769230769231,
+      "delta_dae_minus_run21": -0.00024615384615384614
+    },
+    "epoch_time_sec": {
+      "run21_epoch3": 99.14849638938904,
+      "dae_best_epoch": 90.1013514995575,
+      "delta_dae_minus_run21": -9.047144889831543
+    },
+    "train_denoise": {
+      "run21_epoch3": null,
+      "dae_best_epoch": 0.29971693754196166,
+      "delta_dae_minus_run21": null
+    },
+    "val_denoise": {
+      "run21_epoch3": null,
+      "dae_best_epoch": 0.0,
+      "delta_dae_minus_run21": null
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "best_val_loss": 1.2608015596866609,
+  "epochs_completed": 10,
+  "early_stopping_enabled": true,
+  "early_stopping_patience": 5,
+  "monitor": "val_loss",
+  "metrics_file": "outputs/run28_lora_segfix_10ep\\training_metrics.json",
+  "val_visualizations_dir": "outputs/run28_lora_segfix_10ep\\val_visualizations"
+}

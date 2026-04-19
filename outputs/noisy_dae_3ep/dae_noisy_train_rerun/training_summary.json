@@ -1,0 +1,9 @@
+{
+  "best_val_loss": 2.9259552717208863,
+  "epochs_completed": 3,
+  "early_stopping_enabled": true,
+  "early_stopping_patience": 5,
+  "monitor": "val_loss",
+  "metrics_file": "outputs/noisy_dae_3ep/dae_noisy_train_rerun\\training_metrics.json",
+  "val_visualizations_dir": "outputs/noisy_dae_3ep/dae_noisy_train_rerun\\val_visualizations"
+}

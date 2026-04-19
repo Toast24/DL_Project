@@ -1,0 +1,9 @@
+{
+  "best_val_loss": 2.2296865224838256,
+  "epochs_completed": 1,
+  "early_stopping_enabled": true,
+  "early_stopping_patience": 5,
+  "monitor": "val_loss",
+  "metrics_file": "outputs\\ablation_m1_tiny\\no_consistency\\training_metrics.json",
+  "val_visualizations_dir": "outputs\\ablation_m1_tiny\\no_consistency\\val_visualizations"
+}

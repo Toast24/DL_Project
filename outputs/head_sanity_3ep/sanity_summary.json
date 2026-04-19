@@ -1,0 +1,44 @@
+{
+  "base_config": "configs/default.yaml",
+  "data_root": "data/cable_resplit/cable",
+  "epochs": 3,
+  "seed": 42,
+  "variants": {
+    "width_pruning_heads": {
+      "run_dir": "outputs\\head_sanity_3ep\\width_pruning_heads",
+      "has_best_checkpoint": true,
+      "has_training_summary": true,
+      "has_training_metrics": true,
+      "best_val_loss": 1.5813373982906342,
+      "epochs_completed": 3,
+      "run_status": "ok"
+    },
+    "depth_pruning_heads": {
+      "run_dir": "outputs\\head_sanity_3ep\\depth_pruning_heads",
+      "has_best_checkpoint": true,
+      "has_training_summary": true,
+      "has_training_metrics": true,
+      "best_val_loss": 1.569336599111557,
+      "epochs_completed": 3,
+      "run_status": "ok"
+    },
+    "differentiated_pruning_heads": {
+      "run_dir": "outputs\\head_sanity_3ep\\differentiated_pruning_heads",
+      "has_best_checkpoint": true,
+      "has_training_summary": true,
+      "has_training_metrics": true,
+      "best_val_loss": 1.5712317943572998,
+      "epochs_completed": 3,
+      "run_status": "ok"
+    },
+    "lora_rank2_heads_only": {
+      "run_dir": "outputs\\head_sanity_3ep\\lora_rank2_heads_only",
+      "has_best_checkpoint": true,
+      "has_training_summary": true,
+      "has_training_metrics": true,
+      "best_val_loss": 1.6800508201122284,
+      "epochs_completed": 3,
+      "run_status": "ok"
+    }
+  }
+}

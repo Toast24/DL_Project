@@ -1,0 +1,89 @@
+{
+  "baseline_dir": "outputs/run21_resplit_15es",
+  "data_root": "data/cable_resplit",
+  "categories": [
+    "cable"
+  ],
+  "max_drop": 7.0,
+  "prelim_epochs": 3,
+  "full_epochs": 15,
+  "prelim_only": false,
+  "unsupported_methods": {
+    "low_rank_factorization": "No native matrix-factorization module replacement is implemented.",
+    "quantization": "No integrated train+eval quantized pipeline is implemented in current scripts."
+  },
+  "methods": {
+    "depth_pruning_heads": {
+      "type": "structured_pruning",
+      "required_paths": [],
+      "prelim": {
+        "stage_name": "prelim_3ep",
+        "epochs": 3,
+        "config_path": "outputs\\compression_gate\\configs\\depth_pruning_heads_prelim_3ep.yaml",
+        "run_dir": "outputs\\compression_gate\\depth_pruning_heads\\prelim_3ep",
+        "compare_report": "outputs\\compression_gate\\depth_pruning_heads\\prelim_3ep\\comparison_to_run21_resplit_15es.json",
+        "gate_pass": false,
+        "train_info": {
+          "best_checkpoint": "outputs\\compression_gate\\depth_pruning_heads\\prelim_3ep\\best_model.pth",
+          "training_summary": "outputs\\compression_gate\\depth_pruning_heads\\prelim_3ep\\training_summary.json",
+          "terminated_after_summary": true,
+          "train_return_code": 1
+        },
+        "metrics": {
+          "clean": {
+            "image_ap": 31.715661037542088,
+            "image_auroc": 53.968253968253975,
+            "pixel_pro": 35.05926282214416,
+            "pixel_ap": 2.7545359827278766
+          },
+          "noisy": {
+            "image_ap": 36.52630403570345,
+            "image_auroc": 57.936507936507944,
+            "pixel_pro": 43.36544462098103,
+            "pixel_ap": 2.746359383936484
+          }
+        }
+      },
+      "full": null,
+      "promoted_to_full": false,
+      "skipped": false,
+      "skip_reason": null
+    },
+    "differentiated_pruning_heads": {
+      "type": "structured_pruning",
+      "required_paths": [],
+      "prelim": {
+        "stage_name": "prelim_3ep",
+        "epochs": 3,
+        "config_path": "outputs\\compression_gate\\configs\\differentiated_pruning_heads_prelim_3ep.yaml",
+        "run_dir": "outputs\\compression_gate\\differentiated_pruning_heads\\prelim_3ep",
+        "compare_report": "outputs\\compression_gate\\differentiated_pruning_heads\\prelim_3ep\\comparison_to_run21_resplit_15es.json",
+        "gate_pass": false,
+        "train_info": {
+          "best_checkpoint": "outputs\\compression_gate\\differentiated_pruning_heads\\prelim_3ep\\best_model.pth",
+          "training_summary": "outputs\\compression_gate\\differentiated_pruning_heads\\prelim_3ep\\training_summary.json",
+          "terminated_after_summary": true,
+          "train_return_code": 1
+        },
+        "metrics": {
+          "clean": {
+            "image_ap": 33.61719811979642,
+            "image_auroc": 44.54365079365079,
+            "pixel_pro": 37.79284510077225,
+            "pixel_ap": 2.8366065894114314
+          },
+          "noisy": {
+            "image_ap": 24.978898619040702,
+            "image_auroc": 45.23809523809524,
+            "pixel_pro": 44.6810147599366,
+            "pixel_ap": 3.424047514035581
+          }
+        }
+      },
+      "full": null,
+      "promoted_to_full": false,
+      "skipped": false,
+      "skip_reason": null
+    }
+  }
+}

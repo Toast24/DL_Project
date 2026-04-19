@@ -1,0 +1,57 @@
+{
+  "clean": {
+    "image_level": {
+      "auroc": 44.54365079365079,
+      "f1_max": 39.1304344678639,
+      "ap": 33.61719811979642
+    },
+    "pixel_level": {
+      "auroc": 82.44177700418203,
+      "pro": 37.79284510077225,
+      "ap": 2.8366065894114314
+    },
+    "n_samples": 74,
+    "thresholded": {
+      "image_threshold": -0.0537857711315155,
+      "pixel_threshold": 0.05945547670125961,
+      "image_accuracy": 50.0,
+      "image_precision": 17.24137931034483,
+      "image_recall": 27.77777777777778,
+      "image_f1": 21.27659574468085,
+      "pixel_accuracy": 81.97967201410799
+    }
+  },
+  "noisy": {
+    "image_level": {
+      "auroc": 45.23809523809524,
+      "f1_max": 39.1304344678639,
+      "ap": 24.978898619040702
+    },
+    "pixel_level": {
+      "auroc": 85.11935548111532,
+      "pro": 44.6810147599366,
+      "ap": 3.424047514035581
+    },
+    "n_samples": 74,
+    "thresholded": {
+      "image_threshold": -0.0537857711315155,
+      "pixel_threshold": 0.05945547670125961,
+      "image_accuracy": 24.324324324324326,
+      "image_precision": 24.324324324324326,
+      "image_recall": 100.0,
+      "image_f1": 39.130434782608695,
+      "pixel_accuracy": 49.19683625725575
+    }
+  },
+  "delta": {
+    "image_auroc": 0.69444444444445,
+    "image_f1_max": 0.0,
+    "image_ap": -8.638299500755718,
+    "pixel_auroc": 2.6775784769332915,
+    "pixel_pro": 6.888169659164355,
+    "pixel_ap": 0.5874409246241497,
+    "image_accuracy": -25.675675675675674,
+    "image_f1": 17.853839037927845,
+    "pixel_accuracy": -32.78283575685224
+  }
+}

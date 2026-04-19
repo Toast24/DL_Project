@@ -1,0 +1,84 @@
+{
+  "config": "configs/default.yaml",
+  "checkpoint": "outputs\\run21_resplit_15es\\best_model.pth",
+  "input_folder": "outputs\\demo_random_input",
+  "output_dir": "outputs\\live_demo_random_test",
+  "category": "cable",
+  "caption_text_int8": true,
+  "caption_finetune": false,
+  "image_threshold": 0.5,
+  "pixel_threshold": 0.6,
+  "num_images": 5,
+  "samples": [
+    {
+      "image_path": "outputs\\demo_random_input\\img_00.png",
+      "score": -0.48016369342803955,
+      "predicted_label": 0,
+      "defect_hint": "good",
+      "caption": "industrial inspection photo : close - up industrial inspection image of cable with no visible defect",
+      "artifacts": {
+        "viz": "outputs\\live_demo_random_test\\visualizations_with_captions\\000_img_00.viz.png",
+        "heatmap": "outputs\\live_demo_random_test\\visualizations_with_captions\\000_img_00.heatmap.png",
+        "mask": "outputs\\live_demo_random_test\\visualizations_with_captions\\000_img_00.mask.png",
+        "overlay": "outputs\\live_demo_random_test\\visualizations_with_captions\\000_img_00.overlay.png",
+        "caption": "outputs\\live_demo_random_test\\visualizations_with_captions\\000_img_00.txt"
+      }
+    },
+    {
+      "image_path": "outputs\\demo_random_input\\img_01.png",
+      "score": -0.48106649518013,
+      "predicted_label": 0,
+      "defect_hint": "good",
+      "caption": "industrial inspection photo : close - up industrial inspection image of cable with no visible defect",
+      "artifacts": {
+        "viz": "outputs\\live_demo_random_test\\visualizations_with_captions\\001_img_01.viz.png",
+        "heatmap": "outputs\\live_demo_random_test\\visualizations_with_captions\\001_img_01.heatmap.png",
+        "mask": "outputs\\live_demo_random_test\\visualizations_with_captions\\001_img_01.mask.png",
+        "overlay": "outputs\\live_demo_random_test\\visualizations_with_captions\\001_img_01.overlay.png",
+        "caption": "outputs\\live_demo_random_test\\visualizations_with_captions\\001_img_01.txt"
+      }
+    },
+    {
+      "image_path": "outputs\\demo_random_input\\img_02.png",
+      "score": -0.46985262632369995,
+      "predicted_label": 0,
+      "defect_hint": "good",
+      "caption": "industrial inspection photo : close - up industrial inspection image of cable with no visible defect",
+      "artifacts": {
+        "viz": "outputs\\live_demo_random_test\\visualizations_with_captions\\002_img_02.viz.png",
+        "heatmap": "outputs\\live_demo_random_test\\visualizations_with_captions\\002_img_02.heatmap.png",
+        "mask": "outputs\\live_demo_random_test\\visualizations_with_captions\\002_img_02.mask.png",
+        "overlay": "outputs\\live_demo_random_test\\visualizations_with_captions\\002_img_02.overlay.png",
+        "caption": "outputs\\live_demo_random_test\\visualizations_with_captions\\002_img_02.txt"
+      }
+    },
+    {
+      "image_path": "outputs\\demo_random_input\\img_03.png",
+      "score": -0.7782602906227112,
+      "predicted_label": 0,
+      "defect_hint": "good",
+      "caption": "industrial inspection photo : close - up industrial inspection image of cable with no visible defect",
+      "artifacts": {
+        "viz": "outputs\\live_demo_random_test\\visualizations_with_captions\\003_img_03.viz.png",
+        "heatmap": "outputs\\live_demo_random_test\\visualizations_with_captions\\003_img_03.heatmap.png",
+        "mask": "outputs\\live_demo_random_test\\visualizations_with_captions\\003_img_03.mask.png",
+        "overlay": "outputs\\live_demo_random_test\\visualizations_with_captions\\003_img_03.overlay.png",
+        "caption": "outputs\\live_demo_random_test\\visualizations_with_captions\\003_img_03.txt"
+      }
+    },
+    {
+      "image_path": "outputs\\demo_random_input\\img_04.png",
+      "score": -0.37153360247612,
+      "predicted_label": 0,
+      "defect_hint": "good",
+      "caption": "industrial inspection photo : close - up industrial inspection image of cable with no visible defect",
+      "artifacts": {
+        "viz": "outputs\\live_demo_random_test\\visualizations_with_captions\\004_img_04.viz.png",
+        "heatmap": "outputs\\live_demo_random_test\\visualizations_with_captions\\004_img_04.heatmap.png",
+        "mask": "outputs\\live_demo_random_test\\visualizations_with_captions\\004_img_04.mask.png",
+        "overlay": "outputs\\live_demo_random_test\\visualizations_with_captions\\004_img_04.overlay.png",
+        "caption": "outputs\\live_demo_random_test\\visualizations_with_captions\\004_img_04.txt"
+      }
+    }
+  ]
+}

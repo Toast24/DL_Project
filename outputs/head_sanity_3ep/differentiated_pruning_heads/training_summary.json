@@ -1,0 +1,9 @@
+{
+  "best_val_loss": 1.5712317943572998,
+  "epochs_completed": 3,
+  "early_stopping_enabled": true,
+  "early_stopping_patience": 5,
+  "monitor": "val_loss",
+  "metrics_file": "outputs\\head_sanity_3ep\\differentiated_pruning_heads\\training_metrics.json",
+  "val_visualizations_dir": "outputs\\head_sanity_3ep\\differentiated_pruning_heads\\val_visualizations"
+}

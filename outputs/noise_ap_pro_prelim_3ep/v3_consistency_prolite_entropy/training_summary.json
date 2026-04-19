@@ -1,0 +1,9 @@
+{
+  "best_val_loss": 1.9407847702503205,
+  "epochs_completed": 3,
+  "early_stopping_enabled": true,
+  "early_stopping_patience": 5,
+  "monitor": "val_loss",
+  "metrics_file": "outputs/noise_ap_pro_prelim_3ep/v3_consistency_prolite_entropy\\training_metrics.json",
+  "val_visualizations_dir": "outputs/noise_ap_pro_prelim_3ep/v3_consistency_prolite_entropy\\val_visualizations"
+}

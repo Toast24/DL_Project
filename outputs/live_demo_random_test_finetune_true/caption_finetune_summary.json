@@ -1,0 +1,11 @@
+{
+  "enabled": true,
+  "skipped": false,
+  "records": 96,
+  "epochs": 1,
+  "batch_size": 4,
+  "lr": 2e-05,
+  "epoch_losses": [
+    0.9671755272041386
+  ]
+}

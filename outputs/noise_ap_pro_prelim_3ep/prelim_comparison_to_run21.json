@@ -1,0 +1,33 @@
+{
+  "baseline_run": "run21_resplit_15es",
+  "baseline_noisy": {
+    "image_ap": 81.33140933140935,
+    "pixel_pro": 58.26781925065566
+  },
+  "gate": "candidate_noisy_image_ap > baseline_noisy_image_ap AND candidate_noisy_pixel_pro > baseline_noisy_pixel_pro",
+  "variants": {
+    "v1_consistency_mild": {
+      "noisy_image_ap": 29.729634530998304,
+      "noisy_pixel_pro": 51.980230523375184,
+      "delta_vs_run21_noisy_image_ap": -51.60177480041104,
+      "delta_vs_run21_noisy_pixel_pro": -6.287588727280479,
+      "promote_to_full_training": false
+    },
+    "v2_consistency_prolite": {
+      "noisy_image_ap": 27.263581692192005,
+      "noisy_pixel_pro": 52.07581404872712,
+      "delta_vs_run21_noisy_image_ap": -54.06782763921734,
+      "delta_vs_run21_noisy_pixel_pro": -6.192005201928545,
+      "promote_to_full_training": false
+    },
+    "v3_consistency_prolite_entropy": {
+      "noisy_image_ap": 27.86635150606732,
+      "noisy_pixel_pro": 44.87588573485281,
+      "delta_vs_run21_noisy_image_ap": -53.46505782534203,
+      "delta_vs_run21_noisy_pixel_pro": -13.391933515802855,
+      "promote_to_full_training": false
+    }
+  },
+  "promotion_candidates": [],
+  "auto_promote": null
+}

@@ -1,0 +1,9 @@
+{
+  "best_val_loss": 2.2180564641952514,
+  "epochs_completed": 6,
+  "early_stopping_enabled": true,
+  "early_stopping_patience": 5,
+  "monitor": "val_loss",
+  "metrics_file": "outputs/run23_robustpatch_15ep\\training_metrics.json",
+  "val_visualizations_dir": "outputs/run23_robustpatch_15ep\\val_visualizations"
+}
