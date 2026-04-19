@@ -1,4 +1,4 @@
-﻿# SSVP: Robust Industrial Anomaly Segmentation + Captioning
+# SSVP: Robust Industrial Anomaly Segmentation + Captioning
 
 This repository implements an extended SSVP workflow for industrial visual inspection on MVTec AD cable data, with three practical goals:
 
@@ -80,7 +80,7 @@ python 03_code/scripts/prepare_cable_split.py --source 04_data/datasets/cable --
 - Run:
 
 ```powershell
-python 03_code/scripts/train.py --config 03_code/configs/default.yaml --data_root 04_data/datasets/cable_resplit --categories cable --output_dir 05_results/logs/my_train_run
+python 03_code/scripts/train.py --config 03_code/configs/default.yaml --data_root 04_data/datasets/cable_resplit --categories cable --output_dir 05_results/ablations/my_train_run
 ```
 
 ### 3) inference.py
@@ -90,7 +90,7 @@ python 03_code/scripts/train.py --config 03_code/configs/default.yaml --data_roo
 - Run:
 
 ```powershell
-python 03_code/scripts/inference.py --config 03_code/configs/default.yaml --checkpoint 05_results/logs/my_train_run/best_model.pth --data_root 04_data/datasets/cable_resplit --categories cable --output_dir 05_results/logs/my_train_run/eval_results --visualize
+python 03_code/scripts/inference.py --config 03_code/configs/default.yaml --checkpoint 05_results/ablations/my_train_run/best_model.pth --data_root 04_data/datasets/cable_resplit --categories cable --output_dir 05_results/ablations/my_train_run/eval_results --visualize
 ```
 
 ### 4) evaluate_noise_robustness.py
@@ -100,7 +100,7 @@ python 03_code/scripts/inference.py --config 03_code/configs/default.yaml --chec
 - Run:
 
 ```powershell
-python 03_code/scripts/evaluate_noise_robustness.py --config 03_code/configs/default.yaml --checkpoint 05_results/logs/my_train_run/best_model.pth --data_root 04_data/datasets/cable_resplit --categories cable --output_dir 05_results/logs/my_train_run/noise_eval --clean_results 05_results/logs/my_train_run/eval_results/results.json
+python 03_code/scripts/evaluate_noise_robustness.py --config 03_code/configs/default.yaml --checkpoint 05_results/ablations/my_train_run/best_model.pth --data_root 04_data/datasets/cable_resplit --categories cable --output_dir 05_results/ablations/my_train_run/noise_eval --clean_results 05_results/ablations/my_train_run/eval_results/results.json
 ```
 
 ### 5) run_full_pipeline.py
@@ -110,7 +110,7 @@ python 03_code/scripts/evaluate_noise_robustness.py --config 03_code/configs/def
 - Run:
 
 ```powershell
-python 03_code/scripts/run_full_pipeline.py --config 03_code/configs/default.yaml --data_root 04_data/datasets/cable_resplit/cable --output_dir 05_results/logs/run21_resplit_15es --epochs 15 --num_vis_samples 5
+python 03_code/scripts/run_full_pipeline.py --config 03_code/configs/default.yaml --data_root 04_data/datasets/cable_resplit/cable --output_dir 05_results/ablations/run21_resplit_15es --epochs 15 --num_vis_samples 5
 ```
 
 ### 6) live_demo_noisy_folder.py
@@ -120,7 +120,7 @@ python 03_code/scripts/run_full_pipeline.py --config 03_code/configs/default.yam
 - Run (INT8 caption compression enabled by default):
 
 ```powershell
-python 03_code/scripts/live_demo_noisy_folder.py --input_folder 04_data/datasets/cable/test/combined --output_dir 05_results/logs/live_demo --checkpoint 05_results/logs/run21_resplit_15es/best_model.pth --category cable --recursive
+python 03_code/scripts/live_demo_noisy_folder.py --input_folder 04_data/datasets/cable/test/combined --output_dir 05_results/ablations/live_demo --checkpoint 05_results/ablations/run21_resplit_15es/best_model.pth --category cable --recursive
 ```
 
 ### 7) run_llm_compression_prompt_tests.py
@@ -130,7 +130,7 @@ python 03_code/scripts/live_demo_noisy_folder.py --input_folder 04_data/datasets
 - Run:
 
 ```powershell
-python 03_code/scripts/run_llm_compression_prompt_tests.py --checkpoint 05_results/logs/run21_resplit_15es/best_model.pth --data_root 04_data/datasets/cable_resplit/cable --output_root 05_results/logs/llm_prompt_tests --num_vis_samples 3 --variants baseline llm_compression prompt_improvement combined
+python 03_code/scripts/run_llm_compression_prompt_tests.py --checkpoint 05_results/ablations/run21_resplit_15es/best_model.pth --data_root 04_data/datasets/cable_resplit/cable --output_root 05_results/ablations/llm_prompt_tests --num_vis_samples 3 --variants baseline llm_compression prompt_improvement combined
 ```
 
 ### 8) run_ablation_matrix.py
@@ -140,7 +140,7 @@ python 03_code/scripts/run_llm_compression_prompt_tests.py --checkpoint 05_resul
 - Run:
 
 ```powershell
-python 03_code/scripts/run_ablation_matrix.py --config 03_code/configs/default.yaml --data_root 04_data/datasets/cable_resplit/cable --output_root 05_results/logs/ablation_m1 --epochs 3 --num_vis_samples 5
+python 03_code/scripts/run_ablation_matrix.py --config 03_code/configs/default.yaml --data_root 04_data/datasets/cable_resplit/cable --output_root 05_results/ablations/ablation_m1 --epochs 3 --num_vis_samples 5
 ```
 
 ### 9) run_head_sanity_tests.py
@@ -150,7 +150,7 @@ python 03_code/scripts/run_ablation_matrix.py --config 03_code/configs/default.y
 - Run:
 
 ```powershell
-python 03_code/scripts/run_head_sanity_tests.py --config 03_code/configs/default.yaml --data_root 04_data/datasets/cable_resplit/cable --output_root 05_results/logs/head_sanity_3ep --epochs 3
+python 03_code/scripts/run_head_sanity_tests.py --config 03_code/configs/default.yaml --data_root 04_data/datasets/cable_resplit/cable --output_root 05_results/ablations/head_sanity_3ep --epochs 3
 ```
 
 ### 10) run_compression_gate_pipeline.py
@@ -160,7 +160,7 @@ python 03_code/scripts/run_head_sanity_tests.py --config 03_code/configs/default
 - Run:
 
 ```powershell
-python 03_code/scripts/run_compression_gate_pipeline.py --baseline_dir 05_results/logs/run21_resplit_15es --data_root 04_data/datasets/cable_resplit --categories cable --output_root 05_results/logs/compression_gate --prelim_epochs 3 --full_epochs 15 --max_drop 7.0
+python 03_code/scripts/run_compression_gate_pipeline.py --baseline_dir 05_results/ablations/run21_resplit_15es --data_root 04_data/datasets/cable_resplit --categories cable --output_root 05_results/ablations/compression_gate --prelim_epochs 3 --full_epochs 15 --max_drop 7.0
 ```
 
 ### 11) run_staged_distillation.py
@@ -180,7 +180,7 @@ python 03_code/scripts/run_staged_distillation.py
 - Run:
 
 ```powershell
-python 03_code/scripts/compare_against_baseline.py --baseline_dir 05_results/logs/run21_resplit_15es --candidate_dir 05_results/logs/run31_distill_53m_15ep --max_drop 7.5 --report_path 05_results/logs/run31_distill_53m_15ep/comparison_to_run21.json
+python 03_code/scripts/compare_against_baseline.py --baseline_dir 05_results/ablations/run21_resplit_15es --candidate_dir 05_results/ablations/run31_distill_53m_15ep --max_drop 7.5 --report_path 05_results/ablations/run31_distill_53m_15ep/comparison_to_run21.json
 ```
 
 ### 13) test_shapes.py

@@ -79,7 +79,7 @@ training:
     start_epoch: 2
   distillation:
     enabled: true
-    teacher_checkpoint: "./05_results/logs/run31_distill_53m_15ep/best_model.pth"
+    teacher_checkpoint: "./05_results/ablations/run31_distill_53m_15ep/best_model.pth"
     teacher_config: "./03_code/configs/ssvp_student_53m_distill.yaml"
     lambda_map: 0.30
     lambda_score: 0.15

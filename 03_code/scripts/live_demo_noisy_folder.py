@@ -6,7 +6,7 @@ Default behavior uses run21 best model and enables caption text INT8 compression
 Example:
     python 03_code/scripts/live_demo_noisy_folder.py \
             --input_folder 04_data/datasets/cable/test/combined \
-            --output_dir 05_results/logs/live_demo_combined
+            --output_dir 05_results/ablations/live_demo_combined
 """
 
 import argparse

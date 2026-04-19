@@ -11,7 +11,7 @@ Usage:
     python 03_code/scripts/run_head_sanity_tests.py \
             --config 03_code/configs/default.yaml \
             --data_root 04_data/datasets/cable_resplit/cable \
-            --output_root 05_results/logs/head_sanity_3ep \
+            --output_root 05_results/ablations/head_sanity_3ep \
       --epochs 3
 """
 

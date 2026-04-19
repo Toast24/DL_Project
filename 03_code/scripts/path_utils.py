@@ -15,7 +15,7 @@ DATASETS_DIR = DATA_ROOT_DIR / "datasets"
 SAMPLE_INPUTS_DIR = DATA_ROOT_DIR / "sample_inputs"
 
 RESULTS_DIR = REPO_ROOT / "05_results"
-LOGS_DIR = RESULTS_DIR / "logs"
+LOGS_DIR = RESULTS_DIR / "ablations"
 ABLATIONS_DIR = RESULTS_DIR / "ablations"
 ABLATION_JSON_DIR = RESULTS_DIR / "ablation_json_results"
 FIGURES_DIR = RESULTS_DIR / "figures"

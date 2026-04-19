@@ -2,9 +2,9 @@
 Evaluate checkpoint robustness on heavily noised test images and compare to clean results.
 
 Usage:
-    python 03_code/scripts/evaluate_noise_robustness.py --config 03_code/configs/default.yaml --checkpoint 05_results/logs/runX/best_model.pth \
-            --output_dir 05_results/logs/runX/noise_eval --data_root 04_data/datasets/cable_resplit --categories cable \
-            --clean_results 05_results/logs/runX/eval_results/results.json --calibration_file 05_results/logs/runX/calibration_thresholds.json
+    python 03_code/scripts/evaluate_noise_robustness.py --config 03_code/configs/default.yaml --checkpoint 05_results/ablations/runX/best_model.pth \
+            --output_dir 05_results/ablations/runX/noise_eval --data_root 04_data/datasets/cable_resplit --categories cable \
+            --clean_results 05_results/ablations/runX/eval_results/results.json --calibration_file 05_results/ablations/runX/calibration_thresholds.json
 """
 
 import argparse

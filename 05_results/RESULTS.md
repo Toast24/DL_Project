@@ -1,10 +1,10 @@
-﻿# Results and Analysis
+# Results and Analysis
 
 This document summarizes all experiment outcomes available in this workspace and explains why run21 + caption-side LLM compression is the final recommendation.
 
 ## 1) Final Recommended Configuration
 
-- Segmentation checkpoint: 05_results/logs/run21_resplit_15es/best_model.pth
+- Segmentation checkpoint: 05_results/ablations/run21_resplit_15es/best_model.pth
 - Demo caption mode: INT8 text-transformer compression enabled
 - Main demo entrypoint: live_demo_noisy_folder.py
 
@@ -18,9 +18,9 @@ Why this combination:
 
 Source artifacts:
 
-- 05_results/logs/run21_resplit_15es/eval_results/results.json
-- 05_results/logs/run21_resplit_15es/noise_eval/noise_results.json
-- 05_results/logs/run21_resplit_15es/noise_eval/robustness_report.json
+- 05_results/ablations/run21_resplit_15es/eval_results/results.json
+- 05_results/ablations/run21_resplit_15es/noise_eval/noise_results.json
+- 05_results/ablations/run21_resplit_15es/noise_eval/robustness_report.json
 
 ### Clean test
 
@@ -58,8 +58,8 @@ Interpretation:
 
 Source artifacts:
 
-- 05_results/logs/llm_prompt_tests/llm_prompt_test_summary.json
-- 05_results/logs/llm_prompt_tests/*/caption_finetune_summary.json
+- 05_results/ablations/llm_prompt_tests/llm_prompt_test_summary.json
+- 05_results/ablations/llm_prompt_tests/*/caption_finetune_summary.json
 
 ### What was modified and how it was implemented
 
@@ -163,7 +163,7 @@ The following table includes all recorded runs with available eval outputs.
 
 Source:
 
-- 05_results/logs/compression_gate/compression_gate_summary.json
+- 05_results/ablations/compression_gate/compression_gate_summary.json
 
 Observed:
 
@@ -178,7 +178,7 @@ Result:
 
 Source:
 
-- 05_results/logs/noisy_dae_3ep/dae_noisy_train_rerun/noisy_only_comparison_to_run21_base.json
+- 05_results/ablations/noisy_dae_3ep/dae_noisy_train_rerun/noisy_only_comparison_to_run21_base.json
 
 Observed:
 
@@ -204,7 +204,7 @@ Net effect:
 
 For demos and deployment-style usage in this repo:
 
-1. Use 05_results/logs/run21_resplit_15es/best_model.pth for segmentation.
+1. Use 05_results/ablations/run21_resplit_15es/best_model.pth for segmentation.
 2. Use live_demo_noisy_folder.py for folder-based noisy inference.
 3. Keep caption INT8 compression enabled (default in demo script).
 4. Use prompt fine-tuning only when higher caption specificity justifies runtime cost.

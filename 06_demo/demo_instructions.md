@@ -1,4 +1,4 @@
-﻿# Demo Tutorial: Run21 + LLM Compression From Scratch
+# Demo Tutorial: Run21 + LLM Compression From Scratch
 
 This tutorial shows exactly how to run the main demo on a fresh machine:
 
@@ -69,19 +69,19 @@ Expected output:
 ### Option A: Reproduce from scratch
 
 ```powershell
-python 03_code/scripts/run_full_pipeline.py --config 03_code/configs/default.yaml --data_root 04_data/datasets/cable_resplit/cable --output_dir 05_results/logs/run21_resplit_15es --epochs 15 --num_vis_samples 5
+python 03_code/scripts/run_full_pipeline.py --config 03_code/configs/default.yaml --data_root 04_data/datasets/cable_resplit/cable --output_dir 05_results/ablations/run21_resplit_15es --epochs 15 --num_vis_samples 5
 ```
 
 This produces:
 
-- 05_results/logs/run21_resplit_15es/best_model.pth
-- 05_results/logs/run21_resplit_15es/eval_results/results.json
-- 05_results/logs/run21_resplit_15es/noise_eval/robustness_report.json
-- 05_results/logs/run21_resplit_15es/visualizations_with_captions/
+- 05_results/ablations/run21_resplit_15es/best_model.pth
+- 05_results/ablations/run21_resplit_15es/eval_results/results.json
+- 05_results/ablations/run21_resplit_15es/noise_eval/robustness_report.json
+- 05_results/ablations/run21_resplit_15es/visualizations_with_captions/
 
 ### Option B: Reuse existing run21 checkpoint
 
-If 05_results/logs/run21_resplit_15es/best_model.pth already exists, you can skip training.
+If 05_results/ablations/run21_resplit_15es/best_model.pth already exists, you can skip training.
 
 ## 6) Run the Main Demo (Run21 + LLM Compression)
 
@@ -90,26 +90,26 @@ INT8 text compression for captioning is enabled by default in this demo script.
 ### Demo on a sample noisy folder
 
 ```powershell
-python 03_code/scripts/live_demo_noisy_folder.py --input_folder 04_data/datasets/cable/test/combined --output_dir 05_results/logs/live_demo --checkpoint 05_results/logs/run21_resplit_15es/best_model.pth --category cable --recursive
+python 03_code/scripts/live_demo_noisy_folder.py --input_folder 04_data/datasets/cable/test/combined --output_dir 05_results/ablations/live_demo --checkpoint 05_results/ablations/run21_resplit_15es/best_model.pth --category cable --recursive
 ```
 
 ### Demo on your own noisy folder
 
 ```powershell
-python 03_code/scripts/live_demo_noisy_folder.py --input_folder <PATH_TO_NOISY_IMAGES> --output_dir 05_results/logs/live_demo_custom --checkpoint 05_results/logs/run21_resplit_15es/best_model.pth --category cable --recursive --max_images 0
+python 03_code/scripts/live_demo_noisy_folder.py --input_folder <PATH_TO_NOISY_IMAGES> --output_dir 05_results/ablations/live_demo_custom --checkpoint 05_results/ablations/run21_resplit_15es/best_model.pth --category cable --recursive --max_images 0
 ```
 
 Optional quality mode (slower):
 
 ```powershell
-python 03_code/scripts/live_demo_noisy_folder.py --input_folder <PATH_TO_NOISY_IMAGES> --output_dir 05_results/logs/live_demo_custom_prompt --checkpoint 05_results/logs/run21_resplit_15es/best_model.pth --category cable --recursive --caption_finetune
+python 03_code/scripts/live_demo_noisy_folder.py --input_folder <PATH_TO_NOISY_IMAGES> --output_dir 05_results/ablations/live_demo_custom_prompt --checkpoint 05_results/ablations/run21_resplit_15es/best_model.pth --category cable --recursive --caption_finetune
 ```
 
 ## 7) Understand Demo Outputs
 
 Each processed image gets multiple artifacts under:
 
-- 05_results/logs/live_demo*/visualizations_with_captions/
+- 05_results/ablations/live_demo*/visualizations_with_captions/
 
 Per-image files:
 
@@ -121,19 +121,19 @@ Per-image files:
 
 Run-level summary:
 
-- 05_results/logs/live_demo*/demo_summary.json
+- 05_results/ablations/live_demo*/demo_summary.json
 
 ## 8) Quick Verification Commands
 
 ```powershell
-Get-ChildItem 05_results/logs/live_demo -Recurse -File | Select-Object -ExpandProperty FullName
-Get-Content 05_results/logs/live_demo/demo_summary.json
+Get-ChildItem 05_results/ablations/live_demo -Recurse -File | Select-Object -ExpandProperty FullName
+Get-Content 05_results/ablations/live_demo/demo_summary.json
 ```
 
 ## 9) Common Issues
 
 - Missing checkpoint:
-  - Ensure 05_results/logs/run21_resplit_15es/best_model.pth exists or pass --checkpoint explicitly.
+  - Ensure 05_results/ablations/run21_resplit_15es/best_model.pth exists or pass --checkpoint explicitly.
 - No images found:
   - Check --input_folder path and extensions.
 - Slow captioning:

@@ -2,7 +2,7 @@
 Run full pipeline: train, test, and generate visualizations + captions
 
 Usage (example):
-    python 03_code/scripts/run_full_pipeline.py --config 03_code/configs/default.yaml --data_root 04_data/datasets/cable_resplit/cable --output_dir 05_results/logs/run1
+    python 03_code/scripts/run_full_pipeline.py --config 03_code/configs/default.yaml --data_root 04_data/datasets/cable_resplit/cable --output_dir 05_results/ablations/run1
 
 This script:
   - launches `train.py` (on GPU if available)

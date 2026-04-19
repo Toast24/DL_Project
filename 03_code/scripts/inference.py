@@ -5,8 +5,8 @@ Evaluates a trained SSVP model on the MVTec-AD test set.
 Computes both image-level and pixel-level metrics, generates visualizations.
 
 Usage:
-    python 03_code/scripts/inference.py --config 03_code/configs/default.yaml --checkpoint 05_results/logs/run21_resplit_15es/best_model.pth
-    python 03_code/scripts/inference.py --config 03_code/configs/default.yaml --checkpoint 05_results/logs/run21_resplit_15es/best_model.pth --visualize
+    python 03_code/scripts/inference.py --config 03_code/configs/default.yaml --checkpoint 05_results/ablations/run21_resplit_15es/best_model.pth
+    python 03_code/scripts/inference.py --config 03_code/configs/default.yaml --checkpoint 05_results/ablations/run21_resplit_15es/best_model.pth --visualize
 """
 
 import os
