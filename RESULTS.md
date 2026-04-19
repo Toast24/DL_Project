@@ -54,27 +54,79 @@ Interpretation:
 - Image-level quality drops under heavy synthetic noise, but remains usable.
 - Pixel PRO increases under noisy regime due to threshold behavior and spread effects; this is reported transparently with other pixel metrics.
 
-## 3) LLM Compression and Prompt Experiments
+## 3) LLM Compression, Prompt Fine-Tuning, and Scoring Changes
 
-Source artifact:
+Source artifacts:
 
 - outputs/llm_prompt_tests/llm_prompt_test_summary.json
+- outputs/llm_prompt_tests/*/caption_finetune_summary.json
 
-Observed variants:
+### What was modified and how it was implemented
+
+1. LLM compression path (caption-side)
+
+- Variant trigger: run_llm_compression_prompt_tests.py sets `--caption_text_int8` for `llm_compression` and `combined` variants.
+- Runtime plumbing: run_full_pipeline.py forwards this flag to `captioning.quantize_text_transformer_int8`.
+- Compression implementation: INT8 dynamic quantization is applied only to caption text-transformer linear layers (CPU path), preferring:
+	- `text_decoder.bert.encoder`, else
+	- `text_decoder.transformer`, else
+	- full `text_decoder` / `transformer` fallback.
+- This keeps segmentation model weights unchanged while reducing caption-side compute footprint.
+
+2. Prompt improvement path (domain fine-tuning)
+
+- Variant trigger: run_llm_compression_prompt_tests.py sets `--caption_finetune` for `prompt_improvement` and `combined` variants.
+- Prompt construction:
+	- Domain templates are generated from category + defect type.
+	- Example format: `close-up industrial inspection image of <category> showing <defect> defect`.
+- Fine-tuning data:
+	- Samples are collected from train split (`train_all_types=True`).
+	- Default cap is 96 records (`max_train_samples`).
+- Fine-tuning procedure:
+	- Freeze all BLIP parameters, unfreeze only `text_decoder`.
+	- Optimize with AdamW and token-level cross-entropy (padding masked to `-100`).
+	- Default settings from config: 1 epoch, batch size 4, lr 2e-5.
+- Reporting:
+	- Per-run fine-tune metadata and loss are written to `caption_finetune_summary.json`.
+
+### How scoring changed
+
+1. Model anomaly score fusion (VTAM)
+
+- Global score:
+	- `s_global = cos(v_syn_global, t_abnormal) - cos(v_syn_global, t_normal)`
+- Local score:
+	- Robust pooled map score with quantile + mean mixing:
+	- `s_local = 0.7 * quantile(p_map, 0.995) + 0.3 * mean(p_map)`
+- Final fusion:
+	- `s_final = (1 - gamma_dyn) * s_global + gamma_dyn * s_local`
+	- If entropy-aware mode is enabled, `gamma_dyn` is predicted from entropy/confidence cues and clamped to `[gamma_min, gamma_max]`.
+	- In run21-compatible default config, entropy-aware mode is disabled, so fixed `gamma` is used.
+
+2. Live demo image-level decision scoring
+
+- Demo script converts model logit score to probability:
+	- `score_prob = sigmoid(anomaly_score)`
+- Final image anomaly decision uses OR logic:
+	- `score_prob >= image_threshold` OR `pixel_positive_ratio >= min_defect_area_ratio`
+- Defaults:
+	- `image_threshold=0.50`, `pixel_threshold=0.60`, `min_defect_area_ratio=0.01`.
+
+### Observed variants (current artifact)
 
 - baseline: 3 visualizations + 3 captions, elapsed about 26.695 s
 - llm_compression: 3 visualizations + 3 captions, elapsed about 29.595 s
 - prompt_improvement: 3 visualizations + 3 captions, elapsed about 268.434 s
 
-Qualitative prompt-improvement example from artifacts:
+Prompt-improvement qualitative example from artifacts:
 
 - Baseline caption example: Image from cable
 - Prompt-improved example: industrial inspection photo : close - up industrial inspection image of cable showing cable swap defect
 
 Interpretation:
 
-- Prompt-improvement improves defect specificity but has significantly higher runtime cost.
-- LLM compression is kept as the default deployment mode for better practicality.
+- Prompt improvement increases defect-specific caption detail but is substantially slower.
+- Caption INT8 compression is a practical default for deployment-style runs because it preserves detector behavior and keeps caption overhead low.
 
 ## 4) Consolidated Experiment Ledger
 
