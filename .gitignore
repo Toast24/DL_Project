@@ -19,6 +19,7 @@ Thumbs.db
 
 # Large experiment artifacts
 outputs/
+05_results/logs/
 *.pth
 *.pt
 *.ckpt
@@ -26,6 +27,7 @@ outputs/
 # Local datasets and generated splits
 cable/
 data/cable_resplit/
+04_data/datasets/
 
 # Logs/temp
 *.log
