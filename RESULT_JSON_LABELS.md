@@ -1,8 +1,8 @@
-﻿# JSON Result Artifact Index
+# JSON Result Artifact Index
 
 This index labels all committed JSON result artifacts under outputs.
 
-Total JSON files: 135
+Total JSON files: 122
 
 ## Labels
 
@@ -12,13 +12,6 @@ Total JSON files: 135
 | apples_to_apples_run21_3ep | 14 |
 | compression_gate | 13 |
 | head_sanity_3ep | 13 |
-| live_demo_random_test | 2 |
-| live_demo_random_test_finetune_async | 2 |
-| live_demo_random_test_finetune_retry | 1 |
-| live_demo_random_test_finetune_true | 2 |
-| live_demo_random_test_patched | 2 |
-| live_demo_random_test_patched_finetune | 2 |
-| live_demo_smoke | 2 |
 | llm_prompt_tests | 4 |
 | noise_ap_pro_prelim_3ep | 17 |
 | noisy_dae_3ep | 9 |
@@ -96,40 +89,6 @@ Total JSON files: 135
 - outputs/head_sanity_3ep/width_pruning_heads/calibration_thresholds.json
 - outputs/head_sanity_3ep/width_pruning_heads/training_metrics.json
 - outputs/head_sanity_3ep/width_pruning_heads/training_summary.json
-
-## live_demo_random_test
-
-- outputs/live_demo_random_test/caption_finetune_summary.json
-- outputs/live_demo_random_test/demo_summary.json
-
-## live_demo_random_test_finetune_async
-
-- outputs/live_demo_random_test_finetune_async/caption_finetune_summary.json
-- outputs/live_demo_random_test_finetune_async/demo_summary.json
-
-## live_demo_random_test_finetune_retry
-
-- outputs/live_demo_random_test_finetune_retry/caption_finetune_summary.json
-
-## live_demo_random_test_finetune_true
-
-- outputs/live_demo_random_test_finetune_true/caption_finetune_summary.json
-- outputs/live_demo_random_test_finetune_true/demo_summary.json
-
-## live_demo_random_test_patched
-
-- outputs/live_demo_random_test_patched/caption_finetune_summary.json
-- outputs/live_demo_random_test_patched/demo_summary.json
-
-## live_demo_random_test_patched_finetune
-
-- outputs/live_demo_random_test_patched_finetune/caption_finetune_summary.json
-- outputs/live_demo_random_test_patched_finetune/demo_summary.json
-
-## live_demo_smoke
-
-- outputs/live_demo_smoke/caption_finetune_summary.json
-- outputs/live_demo_smoke/demo_summary.json
 
 ## llm_prompt_tests
 
@@ -235,4 +194,3 @@ Total JSON files: 135
 - outputs/run30_entropy_pro_noisycal_15es/noise_eval/robustness_report.json
 - outputs/run30_entropy_pro_noisycal_15es/training_metrics.json
 - outputs/run30_entropy_pro_noisycal_15es/training_summary.json
-
